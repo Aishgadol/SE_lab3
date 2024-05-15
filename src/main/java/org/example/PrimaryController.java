@@ -53,7 +53,6 @@ public class PrimaryController {
     @FXML
     void printHello(ActionEvent event) {
         displayTF.setText("Hello working");
-        System.out.println("Hello");
     }
 
 }
