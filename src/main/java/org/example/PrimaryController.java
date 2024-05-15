@@ -9,7 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
-/*
+import java.lang.*;
+
 enum Operator{
     ADD,
     SUB,
@@ -21,12 +22,14 @@ enum LastInput{
     OP,
     NUM
 }
-*/
+
 
 public class PrimaryController {
     private int sum;
     private String currBase;
-
+    private LastInput lastInput=LastInput.NUM;
+    private Operator activeOperator;
+    private String expression="";
     @FXML // fx:id="A_btn"
     private Button A_btn; // Value injected by FXMLLoader
 
@@ -104,12 +107,15 @@ public class PrimaryController {
 
     @FXML
     void pressA(ActionEvent e){
-        displayTF.setText(displayTF.getText()+"A");
+        lastInput = LastInput.NUM;
+        expression+="A";
+        displayTF.setText(expression);
     }
 
     @FXML
     void clearScreen(ActionEvent e){
         displayTF.setText("");
+        expression="";
     }
     @FXML
     void setMode(){
@@ -164,4 +170,166 @@ public class PrimaryController {
     }
 
 
-}
+    @FXML
+    void press0(ActionEvent event) {
+
+    }
+
+    @FXML
+    void press1(ActionEvent event) {
+        expression+="1";
+        lastInput = LastInput.NUM;
+        displayTF.setText(expression);
+    }
+
+    @FXML
+    void press2(ActionEvent event) {
+
+    }
+
+    @FXML
+    void press3(ActionEvent event) {
+
+    }
+
+    @FXML
+    void press4(ActionEvent event) {
+
+    }
+
+    @FXML
+    void press5(ActionEvent event) {
+
+    }
+
+    @FXML
+    void press6(ActionEvent event) {
+
+    }
+
+    @FXML
+    void press7(ActionEvent event) {
+
+    }
+
+    @FXML
+    void press8(ActionEvent event) {
+
+    }
+
+    @FXML
+    void press9(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void pressAdd(ActionEvent event) {
+        activeOperator=Operator.ADD;
+        switch (lastInput) {
+            case NUM:
+                expression += "+";
+                displayTF.setText(expression);
+                lastInput = LastInput.OP;
+                break;
+            case OP:
+                expression = expression.substring(0, expression.length() - 1) + "+";
+                displayTF.setText(expression);
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+    @FXML
+    void pressB(ActionEvent event) {
+
+    }
+
+    @FXML
+    void pressC(ActionEvent event) {
+
+    }
+
+    @FXML
+    void pressD(ActionEvent event) {
+
+    }
+
+    @FXML
+    void pressDiv(ActionEvent event) {
+        activeOperator=Operator.DIV;
+        switch (lastInput) {
+            case NUM:
+                expression += "/";
+                displayTF.setText(expression);
+                lastInput = LastInput.OP;
+                break;
+            case OP:
+                expression = expression.substring(0, expression.length() - 1) + "/";
+                displayTF.setText(expression);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    @FXML
+    void pressE(ActionEvent event) {
+
+    }
+
+    @FXML
+    void pressEq(ActionEvent event) {
+
+    }
+
+    @FXML
+    void pressF(ActionEvent event) {
+
+    }
+
+    @FXML
+    void pressMul(ActionEvent event) {
+        activeOperator=Operator.MUL;
+        switch (lastInput) {
+            case NUM:
+                expression += "*";
+                displayTF.setText(expression);
+                lastInput = LastInput.OP;
+                break;
+            case OP:
+                expression = expression.substring(0, expression.length() - 1) + "*";
+                displayTF.setText(expression);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @FXML
+    void pressSub(ActionEvent event) {
+        activeOperator=Operator.SUB;
+        switch (lastInput) {
+            case NUM:
+                expression += "-";
+                displayTF.setText(expression);
+                lastInput = LastInput.OP;
+                break;
+            case OP:
+                expression = expression.substring(0, expression.length() - 1) + "-";
+                displayTF.setText(expression);
+                break;
+            default:
+                break;
+        }
+
+
+        }
+    }
+
+
+

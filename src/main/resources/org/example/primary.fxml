@@ -20,29 +20,29 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </TextField>
-            <Button fx:id="D_btn" disable="true" layoutX="19.0" layoutY="357.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="D" />
-            <Button fx:id="add_btn" disable="true" layoutX="104.0" layoutY="418.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="+" />
-            <Button fx:id="sub_btn" disable="true" layoutX="186.0" layoutY="418.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="-" />
-            <Button fx:id="zero_btn" disable="true" layoutX="103.0" layoutY="244.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="0" />
-            <Button fx:id="E_btn" disable="true" layoutX="21.0" layoutY="418.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="E" />
-            <Button fx:id="mul_btn" disable="true" layoutX="103.0" layoutY="478.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="*" />
-            <Button fx:id="div_btn" disable="true" layoutX="185.0" layoutY="478.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="/" />
-            <Button fx:id="eq_btn" disable="true" layoutX="269.0" layoutY="478.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="=" />
-            <Button fx:id="F_btn" disable="true" layoutX="21.0" layoutY="478.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="F" />
-            <Button fx:id="four_btn" disable="true" layoutX="185.0" layoutY="303.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="4" />
-            <Button fx:id="five_btn" disable="true" layoutX="270.0" layoutY="303.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="5" />
-            <Button fx:id="six_btn" disable="true" layoutX="103.0" layoutY="357.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="6" />
-            <Button fx:id="C_btn" disable="true" layoutX="20.0" layoutY="303.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="C" />
-            <Button fx:id="seven_btn" disable="true" layoutX="185.0" layoutY="357.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="7" />
-            <Button fx:id="eight_btn" disable="true" layoutX="269.0" layoutY="357.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="8" />
-            <Button fx:id="nine_btn" disable="true" layoutX="269.0" layoutY="418.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="9" />
+            <Button fx:id="D_btn" disable="true" layoutX="19.0" layoutY="357.0" mnemonicParsing="false" onAction="#pressD" prefHeight="42.0" prefWidth="69.0" text="D" />
+            <Button fx:id="add_btn" disable="true" layoutX="104.0" layoutY="418.0" mnemonicParsing="false" onAction="#pressAdd" prefHeight="42.0" prefWidth="69.0" text="+" />
+            <Button fx:id="sub_btn" disable="true" layoutX="186.0" layoutY="418.0" mnemonicParsing="false" onAction="#pressSub" prefHeight="42.0" prefWidth="69.0" text="-" />
+            <Button fx:id="zero_btn" disable="true" layoutX="103.0" layoutY="244.0" mnemonicParsing="false" onAction="#press0" prefHeight="42.0" prefWidth="69.0" text="0" />
+            <Button fx:id="E_btn" disable="true" layoutX="21.0" layoutY="418.0" mnemonicParsing="false" onAction="#pressE" prefHeight="42.0" prefWidth="69.0" text="E" />
+            <Button fx:id="mul_btn" disable="true" layoutX="103.0" layoutY="478.0" mnemonicParsing="false" onAction="#pressMul" prefHeight="42.0" prefWidth="69.0" text="*" />
+            <Button fx:id="div_btn" disable="true" layoutX="185.0" layoutY="478.0" mnemonicParsing="false" onAction="#pressDiv" prefHeight="42.0" prefWidth="69.0" text="/" />
+            <Button fx:id="eq_btn" disable="true" layoutX="269.0" layoutY="478.0" mnemonicParsing="false" onAction="#pressEq" prefHeight="42.0" prefWidth="69.0" text="=" />
+            <Button fx:id="F_btn" disable="true" layoutX="21.0" layoutY="478.0" mnemonicParsing="false" onAction="#pressF" prefHeight="42.0" prefWidth="69.0" text="F" />
+            <Button fx:id="four_btn" disable="true" layoutX="185.0" layoutY="303.0" mnemonicParsing="false" onAction="#press4" prefHeight="42.0" prefWidth="69.0" text="4" />
+            <Button fx:id="five_btn" disable="true" layoutX="270.0" layoutY="303.0" mnemonicParsing="false" onAction="#press5" prefHeight="42.0" prefWidth="69.0" text="5" />
+            <Button fx:id="six_btn" disable="true" layoutX="103.0" layoutY="357.0" mnemonicParsing="false" onAction="#press6" prefHeight="42.0" prefWidth="69.0" text="6" />
+            <Button fx:id="C_btn" disable="true" layoutX="20.0" layoutY="303.0" mnemonicParsing="false" onAction="#pressC" prefHeight="42.0" prefWidth="69.0" text="C" />
+            <Button fx:id="seven_btn" disable="true" layoutX="185.0" layoutY="357.0" mnemonicParsing="false" onAction="#press7" prefHeight="42.0" prefWidth="69.0" text="7" />
+            <Button fx:id="eight_btn" disable="true" layoutX="269.0" layoutY="357.0" mnemonicParsing="false" onAction="#press8" prefHeight="42.0" prefWidth="69.0" text="8" />
+            <Button fx:id="nine_btn" disable="true" layoutX="269.0" layoutY="418.0" mnemonicParsing="false" onAction="#press9" prefHeight="42.0" prefWidth="69.0" text="9" />
             <Button fx:id="A_btn" disable="true" layoutX="19.0" layoutY="177.0" mnemonicParsing="false" onAction="#pressA" prefHeight="42.0" prefWidth="69.0" text="A" />
             <Button fx:id="clr_btn" disable="true" layoutX="270.0" layoutY="159.0" mnemonicParsing="false" onAction="#clearScreen" prefHeight="69.0" prefWidth="69.0" text="CLEAR" />
             <ComboBox fx:id="dropDown" layoutX="104.0" layoutY="173.0" onAction="#setMode" prefWidth="150.0" promptText="Mode" visibleRowCount="5" />
-            <Button fx:id="B_btn" disable="true" layoutX="19.0" layoutY="244.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="B" />
-            <Button fx:id="one_btn" disable="true" layoutX="186.0" layoutY="244.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="1" />
-            <Button fx:id="two_btn" disable="true" layoutX="269.0" layoutY="244.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="2" />
-            <Button fx:id="three_btn" disable="true" layoutX="104.0" layoutY="303.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" text="3" />
+            <Button fx:id="B_btn" disable="true" layoutX="19.0" layoutY="244.0" mnemonicParsing="false" onAction="#pressB" prefHeight="42.0" prefWidth="69.0" text="B" />
+            <Button fx:id="one_btn" disable="true" layoutX="186.0" layoutY="244.0" mnemonicParsing="false" onAction="#press1" prefHeight="42.0" prefWidth="69.0" text="1" />
+            <Button fx:id="two_btn" disable="true" layoutX="269.0" layoutY="244.0" mnemonicParsing="false" onAction="#press2" prefHeight="42.0" prefWidth="69.0" text="2" />
+            <Button fx:id="three_btn" disable="true" layoutX="104.0" layoutY="303.0" mnemonicParsing="false" onAction="#press3" prefHeight="42.0" prefWidth="69.0" text="3" />
          </children>
       </AnchorPane>
    </children>

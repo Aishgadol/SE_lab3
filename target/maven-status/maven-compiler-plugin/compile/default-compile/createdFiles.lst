@@ -1,3 +1,6 @@
+org\example\PrimaryController$1.class
+module-info.class
+org\example\Operator.class
 org\example\App.class
 org\example\PrimaryController.class
-module-info.class
+org\example\LastInput.class
