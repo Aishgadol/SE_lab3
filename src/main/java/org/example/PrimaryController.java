@@ -27,6 +27,9 @@ enum LastInput{
 public class PrimaryController {
     private int sum;
     private String currBase;
+    private static int pos=-1,ch;
+    private int base;
+    private int old_base;
     private LastInput lastInput=LastInput.NUM;
     private Operator activeOperator;
     private String expression="";
@@ -103,13 +106,127 @@ public class PrimaryController {
     private Button zero_btn; // Value injected by FXMLLoader
 
 
+    private void nextChar(final String str){
+        ch=(++pos<str.length())?str.charAt(pos):-1;
+    }
 
+
+    private boolean eat( int charToEat,final String str) {
+        while (ch == ' ') nextChar(str);
+        if (ch == charToEat) {
+            nextChar(str);
+            return true;
+        }
+        return false;
+    }
+
+
+    private double parse(final String str) {
+        nextChar(str);
+        double x = parseExpression(str);
+        if (pos < str.length()) throw new RuntimeException("Unexpected: " + (char) ch);
+        return x;
+    }
+
+
+    private double parseExpression(final String str) {
+        double x = parseTerm(str);
+        for (; ; ) {
+            if (eat('+',str)) x += parseTerm(str); // addition
+            else if (eat('-',str)) x -= parseTerm(str); // subtraction
+            else return x;
+        }
+    }
+
+
+    private double parseTerm(final String str) {
+        double x = parseFactor(str);
+        for (; ; ) {
+            if (eat('*',str)) x *= parseFactor(str); // multiplication
+            else if (eat('/',str)) x /= parseFactor(str); // division
+            else return x;
+        }
+    }
+
+    private double parseFactor(final String str) {
+        //if (eat('+')) return +parseFactor(); // unary plus
+        if (eat('-',str)) return -parseFactor(str); // unary minus
+
+        double x;
+        int startPos = pos;
+        if (eat('(',str)) { // parentheses
+            x = parseExpression(str);
+            if (!eat(')',str)) throw new RuntimeException("Missing ')'");
+        } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
+            while ((ch >= '0' && ch <= '9') || ch == '.') nextChar(str);
+            x = Double.parseDouble(str.substring(startPos, pos));
+        } else if (ch >= 'a' && ch <= 'z') { // functions
+            while (ch >= 'a' && ch <= 'z') nextChar(str);
+            String func = str.substring(startPos, pos);
+            if (eat('(',str)) {
+                x = parseExpression(str);
+                if (!eat(')',str)) throw new RuntimeException("Missing ')' after argument to " + func);
+            } else {
+                x = parseFactor(str);
+            }
+        } else {
+            throw new RuntimeException("Unexpected: " + (char) ch);
+        }
+
+        if (eat('^',str)) x = Math.pow(x, parseFactor(str)); // exponentiation
+
+        return x;
+    }
+
+    private double eval(final String str){
+        return parse(str);
+    }
+
+
+    private void convertToBase() {
+        // Define valid characters for the given base
+        String validChars = "";
+        if (old_base == 2) validChars = "01";
+        else if (old_base == 8) validChars = "01234567";
+        else if (old_base == 10) validChars = "0123456789";
+        else if (old_base == 16) validChars = "0123456789ABCDEF";
+        else {
+            System.out.println("Unsupported base");
+            return;
+        }
+
+        String number = "";
+        String res = "";
+        for (char ch : expression.toCharArray()) {
+            if (validChars.indexOf(ch) != -1) {
+                number += ch;
+            } else {
+                if (number.length() > 0) {
+                    res += Integer.toString(Integer.parseInt(number, old_base), base);
+                    number = "";
+                }
+                res += ch;
+
+            }
+        }
+        //convert last number
+        if (number.length() > 0) {
+            res += Integer.toString(Integer.parseInt(number, old_base), base);
+        }
+
+        expression = res.toUpperCase();
+    }
 
     @FXML
     void pressA(ActionEvent e){
-        lastInput = LastInput.NUM;
-        expression+="A";
-        displayTF.setText(expression);
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="A";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
@@ -126,7 +243,10 @@ public class PrimaryController {
         String currMode=dropDown.getValue();
         switch (currMode){
             case "HEX":
-
+                old_base=base;
+                base=16;
+                convertToBase();
+                displayTF.setText(expression);
 
                 break;
             case "DEC":
@@ -136,6 +256,10 @@ public class PrimaryController {
                 D_btn.setDisable(true);
                 E_btn.setDisable(true);
                 F_btn.setDisable(true);
+                old_base=base;
+                base=10;
+                convertToBase();
+                displayTF.setText(expression);
                 break;
             case "OCT":
                 A_btn.setDisable(true);
@@ -146,6 +270,10 @@ public class PrimaryController {
                 F_btn.setDisable(true);
                 nine_btn.setDisable(true);
                 eight_btn.setDisable(true);
+                old_base=base;
+                base=8;
+                convertToBase();
+                displayTF.setText(expression);
                 break;
             case "BIN":
                 A_btn.setDisable(true);
@@ -162,64 +290,135 @@ public class PrimaryController {
                 four_btn.setDisable(true);
                 three_btn.setDisable(true);
                 two_btn.setDisable(true);
+                old_base=base;
+                base=2;
+                convertToBase();
+                displayTF.setText(expression);
                 break;
             default:
                 break;
         }
-
     }
 
 
     @FXML
     void press0(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="0";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void press1(ActionEvent event) {
-        expression+="1";
-        lastInput = LastInput.NUM;
-        displayTF.setText(expression);
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="1";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void press2(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="2";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void press3(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="3";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void press4(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="4";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void press5(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="5";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void press6(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="6";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void press7(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="7";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void press8(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="8";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void press9(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="9";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
 
@@ -245,17 +444,38 @@ public class PrimaryController {
 
     @FXML
     void pressB(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="B";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void pressC(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="C";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
     void pressD(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="D";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
@@ -279,7 +499,14 @@ public class PrimaryController {
 
     @FXML
     void pressE(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="E";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
@@ -289,7 +516,14 @@ public class PrimaryController {
 
     @FXML
     void pressF(ActionEvent event) {
-
+        if(expression.length()<30){
+            lastInput = LastInput.NUM;
+            expression+="F";
+            displayTF.setText(expression);
+        }
+        else{
+            displayTF.setText("Expression too long");
+        }
     }
 
     @FXML
