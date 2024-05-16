@@ -32,7 +32,7 @@ public class PrimaryController {
     private int old_base;
     private LastInput lastInput=LastInput.NUM;
     private Operator activeOperator;
-    private String expression="";
+    private String expression="0";
     @FXML // fx:id="A_btn"
     private Button A_btn; // Value injected by FXMLLoader
 
@@ -121,16 +121,16 @@ public class PrimaryController {
     }
 
 
-    private double parse(final String str) {
+    private int parse(String str) {
         nextChar(str);
-        double x = parseExpression(str);
-        if (pos < str.length()) throw new RuntimeException("Unexpected: " + (char) ch);
+        int x = parseExpression(str);
+        //if (pos < str.length()) throw new RuntimeException("Unexpected: " + (char) ch);
         return x;
     }
 
 
-    private double parseExpression(final String str) {
-        double x = parseTerm(str);
+    private int parseExpression(String str) {
+        int x = parseTerm(str);
         for (; ; ) {
             if (eat('+',str)) x += parseTerm(str); // addition
             else if (eat('-',str)) x -= parseTerm(str); // subtraction
@@ -139,8 +139,8 @@ public class PrimaryController {
     }
 
 
-    private double parseTerm(final String str) {
-        double x = parseFactor(str);
+    private int parseTerm(String str) {
+        int x = parseFactor(str);
         for (; ; ) {
             if (eat('*',str)) x *= parseFactor(str); // multiplication
             else if (eat('/',str)) x /= parseFactor(str); // division
@@ -148,18 +148,18 @@ public class PrimaryController {
         }
     }
 
-    private double parseFactor(final String str) {
+    private int parseFactor(String str) {
         //if (eat('+')) return +parseFactor(); // unary plus
         if (eat('-',str)) return -parseFactor(str); // unary minus
 
-        double x;
+        int x;
         int startPos = pos;
         if (eat('(',str)) { // parentheses
             x = parseExpression(str);
             if (!eat(')',str)) throw new RuntimeException("Missing ')'");
         } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
             while ((ch >= '0' && ch <= '9') || ch == '.') nextChar(str);
-            x = Double.parseDouble(str.substring(startPos, pos));
+            x = Integer.parseInt(str.substring(startPos, pos));
         } else if (ch >= 'a' && ch <= 'z') { // functions
             while (ch >= 'a' && ch <= 'z') nextChar(str);
             String func = str.substring(startPos, pos);
@@ -173,15 +173,71 @@ public class PrimaryController {
             throw new RuntimeException("Unexpected: " + (char) ch);
         }
 
-        if (eat('^',str)) x = Math.pow(x, parseFactor(str)); // exponentiation
+        if (eat('^',str)) x = (int)Math.pow(x, parseFactor(str)); // exponentiation
 
         return x;
     }
 
-    private double eval(final String str){
-        return parse(str);
+    //this function assumes the base is 10. big important
+    private int eval(){
+        String expCopy=expression;
+        int temp_old_base=old_base;
+        int temp_base=base;
+        old_base=base;
+        base=10;
+        convertToBase();
+        String[] tokens=expression.split("(?=[-+*/()])|(?<=[^-+*/][-+*/])|(?<=[()])");
+        old_base=temp_old_base;
+        base=temp_base;
+        convertToBase();
+        int res=0;
+        //this loop takes care of multiplcation/divison, left to right order since no fraction lines included
+        for (int i=0;i<tokens.length;i++){
+            switch(tokens[i]){
+                case "*":
+                    tokens[i+1]=Integer.toString((Integer.parseInt(tokens[i-1])*Integer.parseInt(tokens[i+1])));
+                    tokens[i]="0";
+                    tokens[i-1]="0";
+                    break;
+                case "/":
+                    if(tokens[i+1]=="0"){
+                        return -1;
+                    }
+                    try{
+                        tokens[i+1]=Integer.toString((Integer.parseInt(tokens[i-1])/Integer.parseInt(tokens[i+1])));
+                    } catch (ArithmeticException e){
+                            return -1;
+                    }
+                    tokens[i]="0";
+                    tokens[i-1]="0";
+                    break;
+                default:
+                    break;
+            }
+        }
+        //this loop takes care of add/sub operations, left to right again
+        for(int i=0;i< tokens.length;i++){
+            switch(tokens[i]){
+                case "+":
+                    tokens[i+1]=Integer.toString((Integer.parseInt(tokens[i-1])+Integer.parseInt(tokens[i+1])));
+                    tokens[i]="0";
+                    tokens[i-1]="0";
+                    break;
+                case "-":
+                    tokens[i+1]=Integer.toString((Integer.parseInt(tokens[i-1])-Integer.parseInt(tokens[i+1])));
+                    tokens[i]="0";
+                    tokens[i-1]="0";
+                    break;
+                default:
+                    break;
+            }
+        }
+        int sum=0;
+        for (String s : tokens){
+            sum+=Integer.parseInt(s);
+        }
+        return sum;
     }
-
 
     private void convertToBase() {
         // Define valid characters for the given base
@@ -232,7 +288,7 @@ public class PrimaryController {
     @FXML
     void clearScreen(ActionEvent e){
         displayTF.setText("");
-        expression="";
+        expression="0";
     }
     @FXML
     void setMode(){
@@ -511,6 +567,19 @@ public class PrimaryController {
 
     @FXML
     void pressEq(ActionEvent event) {
+        if(lastInput==LastInput.OP){
+            displayTF.setText("ERROR");
+            return;
+        }
+
+        int res=eval();
+        if(res==-1){
+            displayTF.setText("DIVISION BY ZERO IMPOSSIBLE");
+            expression="0";
+            return;
+        }
+        expression=Integer.toString(res,base).toUpperCase();
+        displayTF.setText(expression);
 
     }
 
