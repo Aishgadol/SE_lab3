@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import java.lang.*;
 
+
 enum Operator{
     ADD,
     SUB,
@@ -18,10 +19,12 @@ enum Operator{
     DIV
 }
 
+
 enum LastInput{
     OP,
     NUM
 }
+
 
 public class PrimaryController {
     private int sum;
