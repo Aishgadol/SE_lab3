@@ -106,6 +106,7 @@ public class PrimaryController {
     @FXML // fx:id="zero_btn"
     private Button zero_btn; // Value injected by FXMLLoader
 
+    
     //this function assumes the base is 10. big important
     private int eval(){
         String expCopy=expression;
