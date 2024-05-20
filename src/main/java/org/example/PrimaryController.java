@@ -23,7 +23,6 @@ enum LastInput{
     NUM
 }
 
-
 public class PrimaryController {
     private int sum;
     private String currBase;
