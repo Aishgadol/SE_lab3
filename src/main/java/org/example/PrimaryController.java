@@ -28,7 +28,6 @@ enum LastInput{
 
 public class PrimaryController {
     private int sum;
-    private String currBase;
     private static int pos=-1,ch;
     private int base;
     private int old_base;
