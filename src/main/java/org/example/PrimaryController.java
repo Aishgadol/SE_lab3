@@ -34,7 +34,7 @@ public class PrimaryController {
     private boolean divByZero=false;
     private LastInput lastInput=LastInput.NUM;
     private Operator activeOperator;
-    private String expression=" ";
+    private String expression="";
     @FXML // fx:id="A_btn"
     private Button A_btn; // Value injected by FXMLLoader
 
@@ -219,7 +219,7 @@ public class PrimaryController {
     @FXML
     void clearScreen(ActionEvent e){
         displayTF.setText("");
-        expression=" ";
+        expression="";
     }
     @FXML
     void setMode(){
@@ -414,6 +414,9 @@ public class PrimaryController {
 
     @FXML
     void pressAdd(ActionEvent event) {
+        if(expression==""){
+            return;
+        }
         activeOperator=Operator.ADD;
         switch (lastInput) {
             case NUM:
@@ -470,6 +473,9 @@ public class PrimaryController {
 
     @FXML
     void pressDiv(ActionEvent event) {
+        if(expression==""){
+            return;
+        }
         activeOperator=Operator.DIV;
         switch (lastInput) {
             case NUM:
@@ -501,16 +507,19 @@ public class PrimaryController {
 
     @FXML
     void pressEq(ActionEvent event) {
+        if(expression==""){
+            return;
+        }
         if(lastInput==LastInput.OP){
             displayTF.setText("ERROR, LAST INPUT WAS OPERATOR");
-            expression=" ";
+            expression="";
             return;
         }
 
         int res=eval();
         if(divByZero){
             displayTF.setText("DIVISION BY ZERO IMPOSSIBLE");
-            expression=" ";
+            expression="";
             divByZero=false;
             return;
         }
@@ -533,6 +542,9 @@ public class PrimaryController {
 
     @FXML
     void pressMul(ActionEvent event) {
+        if(expression==""){
+            return;
+        }
         activeOperator=Operator.MUL;
         switch (lastInput) {
             case NUM:
@@ -551,6 +563,9 @@ public class PrimaryController {
 
     @FXML
     void pressSub(ActionEvent event) {
+        if(expression==""){
+            return;
+        }
         activeOperator=Operator.SUB;
         switch (lastInput) {
             case NUM:
