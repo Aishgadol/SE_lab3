@@ -31,6 +31,7 @@ public class PrimaryController {
     private static int pos=-1,ch;
     private int base;
     private int old_base;
+    private boolean divByZero=false;
     private LastInput lastInput=LastInput.NUM;
     private Operator activeOperator;
     private String expression="0";
@@ -130,12 +131,14 @@ public class PrimaryController {
                     break;
                 case "/":
                     if(tokens[i+1]=="0"){
-                        return -1;
+                        divByZero=true;
+                        return 0;
                     }
                     try{
                         tokens[i+1]=Integer.toString((Integer.parseInt(tokens[i-1])/Integer.parseInt(tokens[i+1])));
                     } catch (ArithmeticException e){
-                            return -1;
+                        divByZero=true;
+                            return 0;
                     }
                     tokens[i]="0";
                     tokens[i-1]="0";
@@ -176,7 +179,6 @@ public class PrimaryController {
         else if (old_base == 10) validChars = "0123456789";
         else if (old_base == 16) validChars = "0123456789ABCDEF";
         else {
-            System.out.println("Unsupported base");
             return;
         }
 
@@ -231,8 +233,8 @@ public class PrimaryController {
                 old_base=base;
                 base=16;
                 convertToBase();
-                displayTF.setText(expression);
-
+//                displayTF.setText(expression);
+                  pressEq(null);
                 break;
             case "DEC":
                 A_btn.setDisable(true);
@@ -244,7 +246,8 @@ public class PrimaryController {
                 old_base=base;
                 base=10;
                 convertToBase();
-                displayTF.setText(expression);
+                //displayTF.setText(expression);
+                pressEq(null);
                 break;
             case "OCT":
                 A_btn.setDisable(true);
@@ -258,7 +261,8 @@ public class PrimaryController {
                 old_base=base;
                 base=8;
                 convertToBase();
-                displayTF.setText(expression);
+                //displayTF.setText(expression);
+                pressEq(null);
                 break;
             case "BIN":
                 A_btn.setDisable(true);
@@ -278,7 +282,8 @@ public class PrimaryController {
                 old_base=base;
                 base=2;
                 convertToBase();
-                displayTF.setText(expression);
+                //displayTF.setText(expression);
+                pressEq(null);
                 break;
             default:
                 break;
@@ -497,14 +502,16 @@ public class PrimaryController {
     @FXML
     void pressEq(ActionEvent event) {
         if(lastInput==LastInput.OP){
-            displayTF.setText("ERROR");
+            displayTF.setText("ERROR, LAST INPUT WAS OPERATOR");
+            expression=" ";
             return;
         }
 
         int res=eval();
-        if(res==-1){
+        if(divByZero){
             displayTF.setText("DIVISION BY ZERO IMPOSSIBLE");
-            expression="0";
+            expression=" ";
+            divByZero=false;
             return;
         }
         expression=Integer.toString(res,base).toUpperCase();
