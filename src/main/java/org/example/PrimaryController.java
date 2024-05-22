@@ -34,7 +34,7 @@ public class PrimaryController {
     private boolean divByZero=false;
     private LastInput lastInput=LastInput.NUM;
     private Operator activeOperator;
-    private String expression="0";
+    private String expression=" ";
     @FXML // fx:id="A_btn"
     private Button A_btn; // Value injected by FXMLLoader
 
@@ -219,7 +219,7 @@ public class PrimaryController {
     @FXML
     void clearScreen(ActionEvent e){
         displayTF.setText("");
-        expression="0";
+        expression=" ";
     }
     @FXML
     void setMode(){
