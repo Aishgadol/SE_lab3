@@ -3,11 +3,9 @@ package org.example;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -46,15 +44,18 @@ public class TestController implements Initializable {
                     imageView.setPreserveRatio(true);
 
                     Label nameLabel=new Label(f.getName());
+                    nameLabel.setAlignment(Pos.CENTER);
 
-                    StackPane imageContainer=new StackPane();
+                    VBox imageContainer=new VBox();
                     imageContainer.getChildren().addAll(imageView,nameLabel);
+                    imageContainer.setAlignment(Pos.CENTER);
 
                     //add tooltip
                     Tooltip tooltip = new Tooltip(f.getName());
                     Tooltip.install(imageView,tooltip);
 
                     imageHBox.getChildren().add(imageContainer);
+                    imageHBox.setAlignment(Pos.CENTER);
                 }catch(Exception e){
                     Alert alert = new Alert(AlertType.ERROR, "Failed to load image: " + f.getName());
                     alert.showAndWait();
