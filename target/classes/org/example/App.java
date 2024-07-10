@@ -19,10 +19,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 400, 600);
+        scene = new Scene(loadFXML("test"), 1280, 800);
         stage.setScene(scene);
-        dropBox = (ComboBox<String>) scene.lookup("#dropDown"); // Adjust the ID accordingly
-        dropBox.getItems().addAll("HEX","DEC","OCT","BIN");
+        //dropBox = (ComboBox<String>) scene.lookup("#dropDown"); // Adjust the ID accordingly
+        //dropBox.getItems().addAll("HEX","DEC","OCT","BIN");
         stage.setTitle("Calculator HEX/DEC/OCT/BIN");
         stage.setResizable(false);
         stage.show();

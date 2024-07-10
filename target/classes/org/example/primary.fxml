@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -24,11 +25,11 @@
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
-            <Button fx:id="add_btn" disable="true" layoutX="104.0" layoutY="418.0" mnemonicParsing="false" onAction="#pressAdd" prefHeight="42.0" prefWidth="69.0" text="+">
+            <Button fx:id="add_btn" disable="true" layoutX="110.0" layoutY="198.0" mnemonicParsing="false" onAction="#pressAdd" prefHeight="42.0" prefWidth="69.0" text="+">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
-            <Button fx:id="sub_btn" disable="true" layoutX="186.0" layoutY="418.0" mnemonicParsing="false" onAction="#pressSub" prefHeight="42.0" prefWidth="69.0" text="-">
+            <Button fx:id="sub_btn" disable="true" layoutX="185.0" layoutY="244.0" mnemonicParsing="false" onAction="#pressSub" prefHeight="42.0" prefWidth="69.0" text="-">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
@@ -36,23 +37,23 @@
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
-            <Button fx:id="E_btn" disable="true" layoutX="21.0" layoutY="418.0" mnemonicParsing="false" onAction="#pressE" prefHeight="42.0" prefWidth="69.0" text="E">
+            <Button fx:id="E_btn" disable="true" layoutX="54.0" layoutY="259.0" mnemonicParsing="false" onAction="#pressE" prefHeight="42.0" prefWidth="69.0" text="E">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
-            <Button fx:id="mul_btn" disable="true" layoutX="103.0" layoutY="478.0" mnemonicParsing="false" onAction="#pressMul" prefHeight="42.0" prefWidth="69.0" text="*">
+            <Button fx:id="mul_btn" disable="true" layoutX="116.0" layoutY="198.0" mnemonicParsing="false" onAction="#pressMul" prefHeight="42.0" prefWidth="69.0" text="*">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
-            <Button fx:id="div_btn" disable="true" layoutX="185.0" layoutY="478.0" mnemonicParsing="false" onAction="#pressDiv" prefHeight="42.0" prefWidth="69.0" text="/">
+            <Button fx:id="div_btn" disable="true" layoutX="185.0" layoutY="186.0" mnemonicParsing="false" onAction="#pressDiv" prefHeight="42.0" prefWidth="69.0" text="/">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
-            <Button fx:id="eq_btn" disable="true" layoutX="269.0" layoutY="478.0" mnemonicParsing="false" onAction="#pressEq" prefHeight="42.0" prefWidth="69.0" text="=">
+            <Button fx:id="eq_btn" disable="true" layoutX="261.0" layoutY="186.0" mnemonicParsing="false" onAction="#pressEq" prefHeight="42.0" prefWidth="69.0" text="=">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
-            <Button fx:id="F_btn" disable="true" layoutX="21.0" layoutY="478.0" mnemonicParsing="false" onAction="#pressF" prefHeight="42.0" prefWidth="69.0" text="F">
+            <Button fx:id="F_btn" disable="true" layoutX="56.0" layoutY="207.0" mnemonicParsing="false" onAction="#pressF" prefHeight="42.0" prefWidth="69.0" text="F">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
@@ -80,7 +81,7 @@
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
-            <Button fx:id="nine_btn" disable="true" layoutX="269.0" layoutY="418.0" mnemonicParsing="false" onAction="#press9" prefHeight="42.0" prefWidth="69.0" text="9">
+            <Button fx:id="nine_btn" disable="true" layoutX="152.0" layoutY="244.0" mnemonicParsing="false" onAction="#press9" prefHeight="42.0" prefWidth="69.0" text="9">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
@@ -109,6 +110,7 @@
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Button>
+            <Pagination layoutX="72.0" layoutY="357.0" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </AnchorPane>
    </children>
